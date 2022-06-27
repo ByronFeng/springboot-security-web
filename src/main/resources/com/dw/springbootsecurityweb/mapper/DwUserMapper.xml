@@ -2,7 +2,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dw.springbootsecurityweb.mapper.DwUserMapper">
 
+    <resultMap id="userMap" type="com.dw.springbootsecurityweb.domain.SysUser">
+        <id property="userId" column="userId"></id>
+        <result property="username" column="username"></result>
+        <result property="password" column="password"></result>
+        <result property="email" column="email"></result>
+        <result property="userStatus" column="userStatus"></result>
+        <collection property="sysRoles" resultMap="roleMap"></collection>
+    </resultMap>
+    <resultMap id="roleMap" type="com.dw.springbootsecurityweb.domain.SysRole">
+        <id property="roleId" column="roleId"></id>
+        <result property="roleName" column="roleName"></result>
+        <result property="roleStatus" column="roleStatus"></result>
+    </resultMap>
 
 
+    <select id="getUserById" parameterType="java.lang.Long" resultType="com.dw.springbootsecurityweb.entity.DwUser">
+        select *
+        from dw_user
+        where id = #{id}
+    </select>
+
+    <select id="loadUserByUsername" parameterType="java.lang.String" resultMap="userMap">
+        select dw_user.id       as userId,
+               dw_user.username,
+               dw_user.`password`,
+               dw_user.email,
+               dw_user.`status` as userStatus,
+               dw_role.id       as roleId,
+               dw_role.`name`   as roleName,
+               dw_role.`status` as roleStatus
+        from dw_user
+                 left join dw_user_role on (dw_user.id = dw_user_role.user_id)
+                 LEFT JOIN dw_role on (dw_user_role.role_id = dw_role.id)
+        WHERE dw_user.username = #{username}
+          and dw_user.`status` = 1
+          and dw_role.`status` = 1
+    </select>
 
 </mapper>
