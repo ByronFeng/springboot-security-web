@@ -9,6 +9,9 @@ import com.dw.springbootsecurityweb.entity.DwUserRole;
 import com.dw.springbootsecurityweb.service.impl.DwRoleServiceImpl;
 import com.dw.springbootsecurityweb.service.impl.DwUserRoleServiceImpl;
 import com.dw.springbootsecurityweb.service.impl.DwUserServiceImpl;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,6 +33,7 @@ import java.util.Map;
 @RequestMapping("/admin")
 public class AdminController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdminController.class);
     private DwUserServiceImpl dwUserService;
     private DwUserRoleServiceImpl dwUserRoleService;
     private DwRoleServiceImpl dwRoleService;
@@ -176,6 +180,7 @@ public class AdminController {
     @RequestMapping("/test1")
     @ResponseBody
     public String test1(){
+        LOGGER.info("这是 info {0}。","参数一");
         return "这是admin权限下的test1";
     }
 

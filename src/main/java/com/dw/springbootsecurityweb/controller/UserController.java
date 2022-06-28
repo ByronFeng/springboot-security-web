@@ -1,5 +1,6 @@
 package com.dw.springbootsecurityweb.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/user")
+@Slf4j
 public class UserController {
 
     /**
@@ -18,6 +20,8 @@ public class UserController {
     @RequestMapping("/api")
     @ResponseBody
     public String user(){
+
+        log.info("这是使用了 @Slf4j 代替在类中添加代码的方式");
         return "这是user的api";
     }
 
